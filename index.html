@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Sentences with Image Background</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js"></script>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    let sentences;
+    let font;
+    let img;
+
+    let index = 0;
+
+    function preload() {
+      // Load text file and font
+      sentences = loadStrings("assets/paragraph.txt");
+      font = loadFont("assets/Junicode.ttf");
+
+      // Load image
+      img = loadImage("assets/pic1.JPG");
+    }
+
+    function setup() {
+      createCanvas(windowWidth, windowHeight);
+      frameRate(10);
+
+      // Resize image to fit width of the canvas
+      img.resize(width, 0);
+      imageMode(CENTER);
+    }
+
+    function draw() {
+      noStroke();
+
+      // Draw background image
+      push();
+      translate(width / 2, height / 2);
+      image(img, 0, 0);
+      pop();
+
+      // Draw sentence
+      fill(255);
+      let spacer = 11;
+
+      if (frameCount % 90 === 0) {
+        index++;
+        if (index >= sentences.length) {
+          index = 0; // Reset to the first sentence
+        }
+      }
+
+      let sentence = sentences[index];
+      textFont(font);
+      textAlign(CENTER, CENTER);
+      textSize(105);
+      textLeading(105);
+      text(sentence, spacer, spacer, width - spacer * 2, height - spacer * 2);
+
+      // Debug: Show frame rate in console
+      console.log(frameRate());
+    }
+
+    function windowResized() {
+      resizeCanvas(windowWidth, windowHeight);
+      img.resize(width, 0);
+    }
+  </script>
+</body>
+</html>
