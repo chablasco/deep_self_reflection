@@ -3,23 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <title>CB Deep Self-Reflections</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js"></script>
   <style>
-    body, html {
-      width: 100%;
-      height: 100%;
+    body {
       margin: 0;
-      padding: 0;
       overflow: hidden;
       position: fixed; /* Ensures the body takes the full viewport */
       background: black; /* Ensures any non-canvas area is black */
     }
     canvas {
       display: block;
-      position: absolute;
-      top: 0;
-      left: 0;
     }
   </style>
 </head>
@@ -32,8 +26,11 @@
     let index = 0;
 
     function preload() {
+      // Load text file and font
       sentences = loadStrings("assets/paragraph.txt");
       font = loadFont("assets/Junicode.ttf");
+
+      // Load image
       img = loadImage("assets/pic2.jpg");
     }
 
@@ -42,24 +39,28 @@
       frameRate(10);
       background(0);
 
+      // Resize image to fit width of the canvas
       img.resize(width, 0);
       imageMode(CENTER);
     }
 
     function draw() {
       noStroke();
+
+      // Draw background image
       push();
       translate(width / 2, height / 2);
       image(img, 0, 0);
       pop();
 
+      // Draw sentence
       fill(255);
       let spacer = 11;
 
       if (frameCount % 90 === 0) {
         index++;
         if (index >= sentences.length) {
-          index = 0;
+          index = 0; // Reset to the first sentence
         }
       }
 
@@ -69,6 +70,9 @@
       textSize(105);
       textLeading(105);
       text(sentence, spacer, spacer, width - spacer * 2, height - spacer * 2);
+
+      // Debug: Show frame rate in console
+      console.log(frameRate());
     }
 
     function windowResized() {
