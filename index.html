@@ -72,6 +72,10 @@
       console.log(frameRate());
     }
 
+    function mousePressed() {
+      fullscreen(!fullscreen());
+    }
+
     function windowResized() {
       resizeCanvas(windowWidth, windowHeight);
       img.resize(width, 0);
